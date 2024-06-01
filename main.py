@@ -1,4 +1,5 @@
 import requests
+from send_mail import send_mail
 
 url = "https://finance.yahoo.com"
 apy_key = "de131c1538df43d59eec035fd3362a4a"
@@ -13,9 +14,13 @@ request = requests.get(url)
 #Get a disctionary with data
 content = request.json()
 
-#Access
+#Access the articles titles
+body = ""
 for article in content["articles"]:
-       print(article["title"])
-       print(article["description"])
+       body = body + (str(article["title"])
+                 + "\n" + str(article["description"])
+                 + 2*"\n")
 
-print(content)
+body = body.encode("utf-8")
+send_mail(body)
+print(body)
